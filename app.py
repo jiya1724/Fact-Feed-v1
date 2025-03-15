@@ -19,4 +19,5 @@ Governments have been urged to take immediate action by transitioning to renewab
 Despite growing awareness, many nations continue to struggle with policy implementation due to economic interests and political resistance. Climate activists and organizations are advocating for more aggressive action, stressing that the current efforts are insufficient to prevent irreversible damage.
 
 The IPCC report concludes with a call for global cooperation, emphasizing that without a collective effort, climate change will continue to accelerate, posing a severe threat to ecosystems, biodiversity, and human civilization."""
+
 print(summarize_text(article))
