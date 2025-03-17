@@ -1,1 +1,1 @@
-# Mini-Project-Sem-VI
+# News Summarizer, Aggregator and Fake News Detection
