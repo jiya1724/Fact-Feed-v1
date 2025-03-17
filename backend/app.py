@@ -4,7 +4,7 @@ from flask import Flask, request, jsonify
 import joblib
 
 # Load the correct trained model & vectorizer
-model = joblib.load("models/fake_news_model.pkl")  # Ensure correct model is used
+model = joblib.load("models/best_fake_news_model.pkl")  # Ensure correct model is used
 vectorizer = joblib.load("models/tfidf_vectorizer.pkl")
 
 app = Flask(__name__)
