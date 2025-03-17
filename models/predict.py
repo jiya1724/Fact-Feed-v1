@@ -10,5 +10,5 @@ def predict_news(news_text):
     return "Real News" if prediction == 1 else "Fake News"
 
 # Test with a sample news article
-sample_text = "Leaked footage shows a world leader conducting secret experiments in an underground laboratory. The shocking discovery has led to widespread outrage and protests."
+sample_text = "An unidentified source has reported that an alien spacecraft secretly landed in California last night. Authorities have allegedly covered up the incident to prevent public panic."
 print("Prediction:", predict_news(sample_text))
