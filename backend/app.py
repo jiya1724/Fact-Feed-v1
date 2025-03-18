@@ -1,43 +1,44 @@
-import re
-import string
 from flask import Flask, request, jsonify
-import joblib
-
-# Load the correct trained model & vectorizer
-model = joblib.load("models/best_fake_news_model.pkl")  # Ensure correct model is used
-vectorizer = joblib.load("models/tfidf_vectorizer.pkl")
+from flask_cors import CORS
+from detector import predict_news
+from summerizer import summarize_text
 
 app = Flask(__name__)
-
-# Function to clean text (SAME as in train_model.py & predict.py)
-def clean_text(text):
-    text = text.lower()  
-    text = re.sub(r'\d+', '', text)  
-    text = text.translate(str.maketrans('', '', string.punctuation))  
-    text = " ".join(text.split())  # Remove extra spaces
-    return text
+CORS(app)  # Enable CORS for frontend requests
 
 @app.route('/')
 def home():
-    return "Fake News Detection API is Running! Use POST /predict to check news."
+    return "Fake News Detection & Summarization API is Running! Use /predict and /summarize."
 
-@app.route('/predict', methods=['POST'])
+@app.route('/predict', methods=['GET', 'POST'])
 def predict():
     try:
         data = request.json
-        text = clean_text(data['text'])  # Apply proper text preprocessing
+        text = data.get("text", "")
+        if not text:
+            return jsonify({"error": "No text provided"}), 400
 
-        # Ensure input is in list format for vectorizer
-        text_vector = vectorizer.transform([text])  
-
-        # Predict using trained model
-        prediction = model.predict(text_vector)[0]
-        result = "Real News" if prediction == 1 else "Fake News"
-
-        return jsonify({'prediction': result})
+        result = predict_news(text)
+        return jsonify({"prediction": result})
 
     except Exception as e:
-        return jsonify({'error': str(e)})
+        return jsonify({"error": str(e)}), 500
+
+@app.route('/summarize', methods=['GET', 'POST'])
+def summarize():
+    try:
+        data = request.json
+        text = data.get("text", "")
+        num_sentences = data.get("num_sentences", 2)
+
+        if not text:
+            return jsonify({"error": "No text provided"}), 400
+
+        summary = summarize_text(text, num_sentences)
+        return jsonify({"summary": summary})
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 if __name__ == '__main__':
     app.run(debug=True)

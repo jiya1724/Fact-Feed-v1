@@ -8,8 +8,8 @@ import joblib
 import re
 
 # Load datasets (set dtype to prevent mixed types warning)
-true_df = pd.read_csv('True.csv', dtype=str, low_memory=False)
-fake_df = pd.read_csv('Fake.csv', dtype=str, low_memory=False)
+true_df = pd.read_csv('datasets/True.csv', dtype=str, low_memory=False)
+fake_df = pd.read_csv('datasets/Fake.csv', dtype=str, low_memory=False)
 
 # Add labels
 true_df['label'] = 1  # Reliable news

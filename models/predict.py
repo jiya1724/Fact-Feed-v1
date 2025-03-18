@@ -1,35 +1,53 @@
 import joblib
 import pandas as pd
-import re 
+import re
 import string
-import nltk
 from nltk.corpus import stopwords
+from nltk.stem import WordNetLemmatizer
 
 # Load trained model & vectorizer
 model = joblib.load("models/best_fake_news_model.pkl")
 vectorizer = joblib.load("models/tfidf_vectorizer.pkl")
 
-# Download stopwords (only needed once)
-nltk.download("stopwords")
+# Preprocessing function
+lemmatizer = WordNetLemmatizer()
 stop_words = set(stopwords.words("english"))
 
-# Function to clean text (same as `train_model.py`)
 def clean_text(text):
-    if not isinstance(text, str) or pd.isna(text):  # Handle missing values
+    if not isinstance(text, str) or pd.isna(text):
         return ""
-    
     text = text.lower()
-    text = re.sub(r'\d+', '', text)  # Remove numbers
-    text = text.translate(str.maketrans('', '', string.punctuation))  # Remove punctuation
-    text = " ".join(word for word in text.split() if word not in stop_words)  # Remove stopwords
+    text = re.sub(r'\d+', '', text)
+    text = text.translate(str.maketrans('', '', string.punctuation))
+    text = " ".join([lemmatizer.lemmatize(word) for word in text.split() if word not in stop_words])
     return text
 
 def predict_news(news_text):
-    text = clean_text(news_text)  # Apply same preprocessing
-    text_vector = vectorizer.transform([text])  # Transform with correct vectorizer
+    text = clean_text(news_text)
+    text_vector = vectorizer.transform([text])
     prediction = model.predict(text_vector)[0]
     return "Real News" if prediction == 1 else "Fake News"
 
-# Test with a sample news article
-sample_text = "In Texas, buses reserved a front seat in honor of Rosa Parks, celebrating her legacyMonsanto announced the closure of three facilities, marking a step towards environmental change"
+# Test
+sample_text = """
+
+"""
+
+"""Real
+Israel launched a series of airstrikes across the Gaza Strip, targeting Hamas in what is described as the heaviest assault since a ceasefire was established in January. Gaza's Ministry of Health reported at least 44 fatalities from the strikes. The Israeli government stated that the attacks were a response to Hamas's refusal to release hostages and engage in ceasefire negotiations. Prime Minister Benjamin Netanyahu emphasized that Israel would intensify its military actions against Hamas.
+The strikes have caused significant destruction in Gaza, with explosions reported in multiple locations. Ambulances were seen rushing to Al Aqsa Hospital in central Gaza. The ceasefire, which had brought temporary relief, is now at risk of collapsing, potentially worsening the humanitarian crisis in the region.
+
+The government has introduced a new healthcare policy aimed at providing affordable medical services to all citizens. The policy includes subsidized health insurance and expanded access to rural areas
+
+
+"""
+
+"""Fake
+
+A viral article claims that NASA scientists have confirmed that ancient Indian temple structures have direct connections to extraterrestrial civilizations. The article alleges that NASA has conducted extensive research and found mysterious signals originating from Indian temples.
+
+An unidentified source has reported that an alien spacecraft secretly landed in California last night. Authorities have allegedly covered up the incident to prevent public panic.
+
+"""
+
 print("Prediction:", predict_news(sample_text))

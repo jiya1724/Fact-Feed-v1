@@ -4,114 +4,88 @@ import string
 import nltk
 import joblib
 from nltk.corpus import stopwords
+from nltk.stem import WordNetLemmatizer
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.model_selection import train_test_split, GridSearchCV
 from sklearn.linear_model import LogisticRegression
 from sklearn.ensemble import RandomForestClassifier, GradientBoostingClassifier
 from sklearn.metrics import accuracy_score
 
-# Download stopwords
+# Download necessary resources
 nltk.download("stopwords")
-stop_words = set(stopwords.words("english"))
+nltk.download("wordnet")
 
-# Function to clean text (Fix NaN values)
+stop_words = set(stopwords.words("english"))
+lemmatizer = WordNetLemmatizer()
+
+# Function to clean text (Improved Preprocessing)
 def clean_text(text):
-    if not isinstance(text, str) or pd.isna(text):  # Handle missing values
+    if not isinstance(text, str) or pd.isna(text):
         return ""
-    
     text = text.lower()
     text = re.sub(r'\d+', '', text)  # Remove numbers
     text = text.translate(str.maketrans('', '', string.punctuation))  # Remove punctuation
-    text = " ".join(word for word in text.split() if word not in stop_words)  # Remove stopwords
+    text = " ".join([lemmatizer.lemmatize(word) for word in text.split() if word not in stop_words])  # Lemmatization
     return text
 
-
-### **📌 1st Dataset: Single CSV with Labeled News**
-df1 = pd.read_csv("datasets/Indian_news.csv")  # Replace with actual filename
-df1 = df1[['text', 'label']]  # Ensure only relevant columns are used
-
-# Convert labels to numeric (if not already)
-# Convert labels in Indian_news.csv
-df1["label"] = df1["label"].apply(lambda x: 1 if str(x).lower() in ["real", "1", "true"] else 0)
-
-
-### **📌 2nd & 3rd Datasets: True.csv & Fake.csv**
+### **📌 Load & Merge Datasets**
 true_df = pd.read_csv("datasets/True.csv")
 fake_df = pd.read_csv("datasets/Fake.csv")
+indian_news_df = pd.read_csv("datasets/Indian_news.csv")
 
-# Assign labels (1 = Real, 0 = Fake)
-true_df["label"] = 1
-fake_df["label"] = 0
+# Assign labels
+true_df["label"] = 1  
+fake_df["label"] = 0  
+indian_news_df["label"] = indian_news_df["label"].apply(lambda x: 1 if str(x).lower() == 'real' else 0)
 
-# Combine into a single DataFrame
-df2 = pd.concat([true_df, fake_df])
-
-### **📌 Merge All Datasets Together**
-df = pd.concat([df1, df2])
+# Merge all datasets
+df = pd.concat([true_df, fake_df, indian_news_df])
 
 # Shuffle dataset
 df = df.sample(frac=1, random_state=42).reset_index(drop=True)
 
-# Remove rows where "text" is NaN
-df = df.dropna(subset=["text"])
-
-# Apply text cleaning
+# Preprocess text
 df["text"] = df["text"].apply(clean_text)
 
-
-# Convert text to numerical format
-vectorizer = TfidfVectorizer(max_features=5000)
+### **📌 Feature Extraction (TF-IDF with n-grams)**
+vectorizer = TfidfVectorizer(ngram_range=(1, 3), max_features=10000)  # Using unigrams, bigrams, trigrams
 X = vectorizer.fit_transform(df["text"])
 y = df["label"]
 
-# Split data
+### **📌 Split Data**
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
-# Define models with hyperparameter tuning
+### **📌 Define & Train Models**
 models = {
     "Logistic Regression": {
-        "model": LogisticRegression(),
-        "params": {
-            "C": [0.01, 0.1, 1, 10],  
-            "max_iter": [100, 200, 300]
-        }
+        "model": LogisticRegression(max_iter=300),
+        "params": {"C": [0.01, 0.1, 1, 10]}
     },
     "Random Forest": {
         "model": RandomForestClassifier(),
-        "params": {
-            "n_estimators": [50, 100, 200],  
-            "max_depth": [10, 20, None]      
-        }
+        "params": {"n_estimators": [100, 200], "max_depth": [10, 20, None]}
     },
     "Gradient Boosting": {
         "model": GradientBoostingClassifier(),
-        "params": {
-            "n_estimators": [50, 100, 200],
-            "learning_rate": [0.01, 0.1, 0.2]
-        }
+        "params": {"n_estimators": [100, 200], "learning_rate": [0.01, 0.1]}
     }
 }
 
-# Perform hyperparameter tuning and find the best model
 best_model = None
 best_accuracy = 0
 
 for name, config in models.items():
-    print(f"🔍 Tuning hyperparameters for {name}...")
-    
-    # Perform Grid Search
+    print(f"Tuning hyperparameters for {name}...")
     grid_search = GridSearchCV(config["model"], config["params"], cv=3, scoring="accuracy", n_jobs=-1)
     grid_search.fit(X_train, y_train)
     
-    # Get best model
     best_model_instance = grid_search.best_estimator_
     y_pred = best_model_instance.predict(X_test)
     acc = accuracy_score(y_test, y_pred)
     
-    print(f"✅ Best {name} Accuracy: {acc:.2f}")
-    print(f"🔹 Best Parameters: {grid_search.best_params_}\n")
+    print(f"{name} Accuracy: {acc:.2f}")
+    print(f"Best Parameters: {grid_search.best_params_}\n")
 
-    # Save the best-performing model
     if acc > best_accuracy:
         best_accuracy = acc
         best_model = best_model_instance
@@ -120,17 +94,4 @@ for name, config in models.items():
 joblib.dump(best_model, "models/best_fake_news_model.pkl")
 joblib.dump(vectorizer, "models/tfidf_vectorizer.pkl")
 
-print(f"🏆 Best model saved: {best_model}")
-
-# Train the best model
-best_model.fit(X_train, y_train)
-
-# Train & Test Accuracy
-train_acc = best_model.score(X_train, y_train)
-test_acc = best_model.score(X_test, y_test)
-
-print(f"\n🏆 Training Accuracy: {train_acc:.2f}")
-print(f"📊 Test Accuracy: {test_acc:.2f}")
-
-if train_acc - test_acc > 0.15:  # If difference is more than 15%, model is overfitting
-    print("⚠️ WARNING: Model is overfitting. Try reducing max_depth in Random Forest or n_estimators in Gradient Boosting.")
+print(f"Best model saved: {best_model}")
