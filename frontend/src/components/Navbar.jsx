@@ -21,7 +21,7 @@ const Navbar = () => {
           p-4 md:p-0 rounded-lg md:rounded-none ${isOpen ? 'flex flex-col' : 'hidden md:flex'}`}>
 
         <Link to="/" className="hover:text-purple-400 text-white">Home</Link>
-        {/* <Link to="/submit" className="hover:text-blue-400 text-white">Verify News</Link> */}
+        <Link to="/submit" className="hover:text-blue-400 text-white">Verify News</Link>
         <Link to="/detect" className="hover:text-red-400 text-white">Fake News Detector</Link>
         <Link to="/summarizer" className="hover:text-green-400 text-white">Summarizer</Link>
         <Link to="/logout" className="hover:text-yellow-400 text-white">Logout</Link>

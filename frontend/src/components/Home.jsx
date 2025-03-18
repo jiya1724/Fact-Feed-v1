@@ -11,20 +11,22 @@ function Home() {
         <div className="bg-white bg-opacity-10 p-6 rounded-lg shadow-md text-center">
           <h2 className="text-3xl font-bold mb-4">Welcome to FactFeed AI</h2>
           <p className="text-gray-300">
-            Your hub for Verifying and Summarizing news with AI. Stay informed. Stay smart.
+            Your hub for verifying and sharing authentic news with the community. Stay informed. Stay smart.
           </p>
 
-          {/* Button (No redirection) */}
+          {/* Single Submit News Button */}
           <div className="mt-6">
-            <button onClick={() => navigate('/logout')} className="bg-purple-600 px-5 py-2 rounded-xl hover:bg-purple-700">
-              Why tf am I here???
-            </button>
+            <Link to="/submit">
+              <button className="bg-purple-600 hover:bg-purple-700 px-5 py-2 rounded-xl transition transform hover:scale-105 hover:shadow-lg">
+                Submit News
+              </button>
+            </Link>
           </div>
         </div>
 
         <div>
           <p className='text-yellow-400 p-4 text-center'>
-            This homepage is temporary and will later be used to display news aggregator feature...Hold my beer till final Eval!
+            This homepage is temporary and will later be used to display news aggregator feature. HOLD ON!
           </p>
         </div>
 
