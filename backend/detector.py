@@ -3,8 +3,8 @@ import string
 import joblib
 
 # Load trained model & vectorizer
-model = joblib.load("models/best_fake_news_model.pkl")
-vectorizer = joblib.load("models/tfidf_vectorizer.pkl")
+model = joblib.load("models/trained/nb_news_classifier.pkl")
+vectorizer = joblib.load("models/trained/nb_tfidf_vectorizer.pkl")
 
 # Function to clean text (same as in train_model.py)
 def clean_text(text):
