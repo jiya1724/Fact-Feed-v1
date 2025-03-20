@@ -6,8 +6,8 @@ from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer
 
 # Load trained model & vectorizer
-model = joblib.load("models/trained/nb_news_classifier.pkl")
-vectorizer = joblib.load("models/trained/nb_tfidf_vectorizer.pkl")
+model = joblib.load("models/best_fake_news_model.pkl")
+vectorizer = joblib.load("models/tfidf_vectorizer.pkl")
 
 # Preprocessing function
 lemmatizer = WordNetLemmatizer()
@@ -30,7 +30,7 @@ def predict_news(news_text):
 
 # Test
 sample_text = """
-The government has introduced a new healthcare policy aimed at providing affordable medical services to all citizens. The policy includes subsidized health insurance and expanded access to rural areas
+
 """
 
 """Real
