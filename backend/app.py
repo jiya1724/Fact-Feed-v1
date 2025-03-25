@@ -10,6 +10,9 @@ CORS(app)  # Enable CORS for frontend requests
 def home():
     return "Fake News Detection & Summarization API is Running! Use /predict and /summarize."
 
+
+
+
 @app.route('/predict', methods=['GET', 'POST'])
 def predict():
     try:
