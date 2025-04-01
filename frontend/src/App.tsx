@@ -13,7 +13,7 @@ function App() {
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/submit" element={<SubmitNews />} />
+        {/* <Route path="/submit" element={<SubmitNews />} /> */}
         <Route path="/logout" element={<Logout />} />
         <Route path="/detect" element={<FakeNewsDetector />} /> {/* Fake News Detector */}
         <Route path="/summarizer" element={<Summarizer />} /> {/* Summarizer */}

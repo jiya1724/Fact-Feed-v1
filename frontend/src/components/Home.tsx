@@ -17,10 +17,17 @@ function Home() {
 
           {/* Single Submit News Button */}
           <div className="mt-6">
-            <Link to="/submit">
-              <button className="bg-purple-600 hover:bg-purple-700 px-5 py-2 rounded-xl transition transform hover:scale-105 hover:shadow-lg">
-                Submit News
-              </button>
+            <Link to="/detect">
+            <button className="bg-purple-600 hover:bg-purple-700 px-5 py-2 rounded-xl transition transform hover:scale-105 hover:shadow-lg mr-4">
+              Verify News
+            </button>
+            </Link>
+
+            <Link to="/summarizer">
+            <button className="bg-green-600 hover:bg-green-700 px-5 py-2 rounded-xl transition transform hover:scale-105 hover:shadow-lg">
+              Summarize
+            </button>
+
             </Link>
           </div>
         </div>
@@ -44,8 +51,8 @@ function Home() {
           </div>
 
           <div className="bg-white bg-opacity-10 p-4 rounded-lg text-center hover:scale-105 transition transform hover:shadow-xl">
-            <h3 className="text-xl font-semibold mb-2">Community Driven</h3>
-            <p className="text-gray-300">Share verified news to keep everyone informed and safe.</p>
+            <h3 className="text-xl font-semibold mb-2">News Aggregator</h3>
+            <p className="text-gray-300">Stay Updated with Verified News from Multiple Sources!</p>
           </div>
         </div>
       </div>

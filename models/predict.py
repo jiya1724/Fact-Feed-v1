@@ -6,13 +6,12 @@ from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer
 
 # Load trained model & vectorizer
-<<<<<<< HEAD
+
 model = joblib.load("models/trained/nb_news_classifier.pkl")
 vectorizer = joblib.load("models/trained/nb_tfidf_vectorizer.pkl")
-=======
+
 model = joblib.load("nb_news_classifier.pkl")
 vectorizer = joblib.load("nb_tfidf_vectorizer.pkl")
->>>>>>> e8c4308 (NB trained)
 
 # Preprocessing function
 lemmatizer = WordNetLemmatizer()
@@ -35,11 +34,10 @@ def predict_news(news_text):
 
 # Test
 sample_text = """
-<<<<<<< HEAD
+
 The government has introduced a new healthcare policy aimed at providing affordable medical services to all citizens. The policy includes subsidized health insurance and expanded access to rural areas
-=======
+
 According to a report circulating on WhatsApp, the United Nations has officially recognized India as the richest country in the world in 2024. The message claims that India’s economy has surpassed that of the USA and China in terms of GDP.
->>>>>>> e8c4308 (NB trained)
 """
 
 """Real
@@ -56,6 +54,9 @@ The government has introduced a new healthcare policy aimed at providing afforda
 A viral article claims that NASA scientists have confirmed that ancient Indian temple structures have direct connections to extraterrestrial civilizations. The article alleges that NASA has conducted extensive research and found mysterious signals originating from Indian temples.
 
 An unidentified source has reported that an alien spacecraft secretly landed in California last night. Authorities have allegedly covered up the incident to prevent public panic.
+
+
+Israel launched a series of airstrikes across the Gaza Strip, targeting Hamas in what is described as the heaviest assault since a ceasefire was established in January. The Israeli government stated that the attacks were a response to Hamas's refusal to release hostages and engage in ceasefire negotiations.  
 
 """
 

@@ -11,14 +11,13 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.ensemble import RandomForestClassifier, GradientBoostingClassifier
 from sklearn.metrics import accuracy_score
 
-# Download necessary resources
 nltk.download("stopwords")
 nltk.download("wordnet")
 
 stop_words = set(stopwords.words("english"))
 lemmatizer = WordNetLemmatizer()
 
-# Function to clean text (Improved Preprocessing)
+
 def clean_text(text):
     if not isinstance(text, str) or pd.isna(text):
         return ""
@@ -28,34 +27,33 @@ def clean_text(text):
     text = " ".join([lemmatizer.lemmatize(word) for word in text.split() if word not in stop_words])  # Lemmatization
     return text
 
-### **📌 Load & Merge Datasets**
+
 true_df = pd.read_csv("datasets/True.csv")
 fake_df = pd.read_csv("datasets/Fake.csv")
 indian_news_df = pd.read_csv("datasets/Indian_news.csv")
 
-# Assign labels
+
 true_df["label"] = 1  
 fake_df["label"] = 0  
 indian_news_df["label"] = indian_news_df["label"].apply(lambda x: 1 if str(x).lower() == 'real' else 0)
 
-# Merge all datasets
+
 df = pd.concat([true_df, fake_df, indian_news_df])
 
-# Shuffle dataset
+
 df = df.sample(frac=1, random_state=42).reset_index(drop=True)
 
-# Preprocess text
+
 df["text"] = df["text"].apply(clean_text)
 
-### **📌 Feature Extraction (TF-IDF with n-grams)**
-vectorizer = TfidfVectorizer(ngram_range=(1, 3), max_features=10000)  # Using unigrams, bigrams, trigrams
+
+vectorizer = TfidfVectorizer(ngram_range=(1, 3), max_features=10000)
 X = vectorizer.fit_transform(df["text"])
 y = df["label"]
 
-### **📌 Split Data**
+
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
-### **📌 Define & Train Models**
 models = {
     "Logistic Regression": {
         "model": LogisticRegression(max_iter=300),
@@ -90,7 +88,7 @@ for name, config in models.items():
         best_accuracy = acc
         best_model = best_model_instance
 
-# Save the best model
+
 joblib.dump(best_model, "models/best_fake_news_model.pkl")
 joblib.dump(vectorizer, "models/tfidf_vectorizer.pkl")
 
