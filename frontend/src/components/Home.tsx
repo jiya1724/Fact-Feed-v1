@@ -1,5 +1,6 @@
 import Navbar from './Navbar';
 import { Link, useNavigate } from 'react-router-dom';
+import { CardContainer, CardBody, CardItem } from './ui/3d-card';
 
 function Home() {
   const navigate = useNavigate(); // Hook for navigation
@@ -22,12 +23,6 @@ function Home() {
               </button>
             </Link>
           </div>
-        </div>
-
-        <div>
-          <p className='text-yellow-400 p-4 text-center'>
-            This homepage is temporary and will later be used to display news aggregator feature. HOLD ON!
-          </p>
         </div>
 
         {/* Features Section with Clickable Boxes */}

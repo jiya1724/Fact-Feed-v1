@@ -23,7 +23,7 @@ import React, { useState } from 'react';
  
          <div className="mb-4">
            <label className="block mb-1">Description</label>
-           <textarea className="w-full p-2 rounded bg-black bg-opacity-30 focus:outline-none" placeholder="Enter news description" rows="4" value={description} onChange={(e) => setDescription(e.target.value)}></textarea>
+           <textarea className="w-full p-2 rounded bg-black bg-opacity-30 focus:outline-none" placeholder="Enter news description" rows={4} value={description} onChange={(e) => setDescription(e.target.value)}></textarea>
          </div>
  
          <div className="mb-4">
