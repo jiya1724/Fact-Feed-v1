@@ -1,11 +1,11 @@
 import os
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request,send_from_directory
 from backend import db, migrate, cors
 from apscheduler.schedulers.background import BackgroundScheduler
 import logging
 
 def create_app():
-    app = Flask(__name__)
+    app = Flask(__name__,static_folder="../frontend/dist")
     
     # Configuration settings
     basedir = os.path.abspath(os.path.dirname(__file__))
@@ -26,6 +26,15 @@ def create_app():
     @app.route('/')
     def home():
         return "Fake News Detection & Summarization API is Running!"
+    
+
+    @app.route("/", defaults={"path": ""})
+    @app.route("/<path:path>")
+    def serve(path):
+      if path != "" and os.path.exists(os.path.join(app.static_folder, path)):
+        return send_from_directory(app.static_folder, path)
+      else:
+        return send_from_directory(app.static_folder, "index.html")
 
     @app.route('/predict', methods=['POST'])
     def predict():
