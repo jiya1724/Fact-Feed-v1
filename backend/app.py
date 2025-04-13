@@ -1,47 +1,94 @@
-from flask import Flask, request, jsonify
-from flask_cors import CORS
-from detector import predict_news
-from summerizer import summarize_text
+import os
+from flask import Flask, jsonify, request
+from backend import db, migrate, cors
+from apscheduler.schedulers.background import BackgroundScheduler
+import logging
 
-app = Flask(__name__)
-CORS(app)  # Enable CORS for frontend requests
+def create_app():
+    app = Flask(__name__)
+    
+    # Configuration settings
+    basedir = os.path.abspath(os.path.dirname(__file__))
+    parent_dir = os.path.dirname(basedir)
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(parent_dir, 'instance', 'news.db')
+    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+    
+    # Initialize extensions with the Flask app
+    db.init_app(app)
+    migrate.init_app(app, db)
+    cors.init_app(app,resources={r"/api/*": {"origins": "http://localhost:5173"}})
 
-@app.route('/')
-def home():
-    return "Fake News Detection & Summarization API is Running! Use /predict and /summarize."
+    # Import routes and models after db initialization
+    from backend.models import Article
+    from backend.detector import predict_news
+    from backend.summerizer import summarize_text
+    
+    @app.route('/')
+    def home():
+        return "Fake News Detection & Summarization API is Running!"
 
-
-
-
-@app.route('/predict', methods=['GET', 'POST'])
-def predict():
-    try:
+    @app.route('/predict', methods=['POST'])
+    def predict():
         data = request.json
         text = data.get("text", "")
         if not text:
             return jsonify({"error": "No text provided"}), 400
-
+        
         result = predict_news(text)
         return jsonify({"prediction": result})
 
-    except Exception as e:
-        return jsonify({"error": str(e)}), 500
-
-@app.route('/summarize', methods=['GET', 'POST'])
-def summarize():
-    try:
+    @app.route('/summarize', methods=['POST'])
+    def summarize():
         data = request.json
         text = data.get("text", "")
         num_sentences = data.get("num_sentences", 2)
-
+        
         if not text:
             return jsonify({"error": "No text provided"}), 400
-
+        
         summary = summarize_text(text, num_sentences)
         return jsonify({"summary": summary})
 
-    except Exception as e:
-        return jsonify({"error": str(e)}), 500
+    @app.route('/api/news')
+    def get_news():
+        try:
+            articles = Article.query.order_by(Article.published_at.desc()).limit(100).all()
+            article_list = [{
+                'title': a.title,
+                'content': a.content,
+                'source': a.source,
+                'published_at': a.published_at.isoformat() if a.published_at else None,
+                'category': a.category,
+                'author': a.author
+            } for a in articles]
+            return jsonify(article_list)
+        except Exception as e:
+            app.logger.error(f"Error fetching news: {str(e)}")
+            return jsonify({"error": f"Internal server error: {str(e)}"}), 500
+        
+
+    # Setup background task for fetching news
+    def scheduled_fetch():
+        with app.app_context():
+            try:
+                from backend.aggregator.fetcher import fetch_news
+                from backend.aggregator.storage import store_articles
+                print("Scheduled fetch started...")
+                articles = fetch_news()
+                new_count = store_articles(articles)
+                print(f"Added {new_count} new articles")
+            except Exception as e:
+                print(f"Error in scheduled fetch: {str(e)}")
+
+    # Initialize scheduler
+    scheduler = BackgroundScheduler()
+    scheduler.add_job(scheduled_fetch, 'interval', hours=1)
+    scheduler.start()
+
+    return app
+
+# Create the app instance
+app = create_app()
 
 if __name__ == '__main__':
     app.run(debug=True)
