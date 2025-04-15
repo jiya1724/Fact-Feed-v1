@@ -1,111 +1,92 @@
-# News Summarizer, Aggregator and Fake News Detection
+# 📰 News Summarizer, Aggregator, and Fake News Detection
+
+## 📝 Project Overview
+
+This is a web-based application that allows users to:
+
+- ✂️ Summarize lengthy news articles using advanced Natural Language Processing (NLP) techniques.
+- 🌐 Aggregate news from multiple sources for comprehensive coverage.
+- 🧪 Detect and flag potentially fake news content to ensure information reliability.
+
+The application uses **Python (Flask)** for backend processing and **TypeScript (React)** for the frontend. It integrates machine learning models to power NLP tasks like summarization and fake news detection.
+
+---
+
+## 🚀 Features
+
+- **Text Summarization**: Condenses articles into their key points.
+- **News Aggregation**: Fetches and stores news from diverse APIs/sources.
+- **Fake News Detection**: Flags suspicious or misleading content using ML classifiers.
+
+---
+
+## 🛠️ Technologies Used
+
+| Layer     | Technology                                    |
+|-----------|-----------------------------------------------|
+| Frontend  | TypeScript, React, Tailwind CSS, Mako         |
+| Backend   | Python (Flask, Flask-SQLAlchemy, Flask-Migrate) |
+| ML/NLP    | Scikit-learn, NLTK, pandas, numpy             |
+| Database  | SQLite                                        |
+| Other     | dotenv, logging, cron jobs (APScheduler)      |
+
+---
+
+## 📁 Project Structure
+. ├── backend/ # Flask backend code ├── frontend/ # React + Tailwind frontend ├── datasets/ # ML training/evaluation datasets ├── models/ # Trained ML models ├── logs/ # Log files ├── migrations/ # DB migrations via Alembic ├── instance/ # Instance configs (e.g., API keys) ├── cosine_summarizer.py # Cosine similarity-based summarizer ├── summarize.py # Main summarizer script ├── requirements.txt # Python dependencies ├── .flaskenv # Flask environment variables └── README.md # Project documentation
 
 
-📝 Project Overview:
+---
 
-This project is a web-based application that enables users to:​
+## ⚙️ Installation
 
-Summarize lengthy news articles using advanced Natural Language Processing (NLP) techniques.
+### 1. Clone the repository
 
-Aggregate news from multiple sources for comprehensive coverage.
-
-Detect and flag potentially fake news content to ensure information reliability.​
-
-The application leverages Python for backend processing, TypeScript for frontend development, and integrates various machine learning models for NLP tasks.​
-
-🚀 Features
-
-Text Summarization: Condenses articles to their essential points.
-
-News Aggregation: Collects news from diverse sources for a unified view.
-
-Fake News Detection: Analyzes content to identify misinformation.​
-
-🛠️ Technologies Used
-
-Backend: Python, Flask
-
-Frontend: TypeScript, HTML, CSS
-
-Machine Learning: Scikit-learn, TensorFlow
-
-Database: SQLite​
-
-📁 Project Structure
-├── backend/               # Backend API and server logic
-
-├── frontend/              # Frontend application
-
-├── datasets/              # Datasets for training and evaluation
-
-├── models/                # Pre-trained and custom ML models
-
-├── logs/                  # Log files for monitoring
-
-├── migrations/            # Database migration files
-
-├── instance/              # Instance-specific configurations
-
-├── .flaskenv              # Flask environment variables
-
-├── cosine_summarizer.py   # Script for cosine similarity summarization
-
-├── summarize.py           # Main summarization script
-
-└── README.md              # Project documentation
-
-
-⚙️ Installation
-
-1.Clone the repository:git clone https://github.com/KartikAmbupe/Mini-Project-Sem-VI.git
+```bash
+git clone https://github.com/KartikAmbupe/Mini-Project-Sem-VI.git
 cd Mini-Project-Sem-VI
 
-
-2.Install dependencies:
+2. Install dependencies
 
 pip install -r requirements.txt
 
-
-3.Run database migrations (if applicable):
+3. Run database migrations
 
 flask db upgrade
 
-4.Run the application:
+4. Start the application
 
 flask run
 
 🧪 Usage
 
-Access the application via http://localhost:5000.
+Open the app in your browser: http://localhost:5000
 
-Navigate through the interface to summarize articles, view aggregated news, and check for fake news detection.​
+Navigate through:
 
-🛠️ Tech Stack
+Summarizer to condense articles.
 
-Layer	Technology
+Aggregator to browse current news.
 
-Frontend	TypeScript, JavaScript, HTML, CSS, Mako templates
-
-Backend	Python (Flask)
-
-ML/NLP	Python (scikit-learn, pandas, numpy, nltk)
-
-Data	Custom datasets for fake news detection and summarization
-
-Other	Shell scripts, logging, migrations, Flask environment
-
+Detector to check for fake news.
 
 🤖 Machine Learning Approach
-Summarization: Uses cosine similarity and NLP techniques to extract key sentences and generate summaries.
+Summarization: Extractive method using cosine similarity and sentence ranking via NLP.
 
-Fake News Detection: Trained on labeled datasets using algorithms such as Naive Bayes or Logistic Regression. Text is preprocessed, vectorized (e.g., TF-IDF), and classified as real or fake.
+Fake News Detection: Classification using algorithms like Naive Bayes or Logistic Regression on TF-IDF features.
 
-
+Aggregation: Scheduled background jobs (via APScheduler) pull articles using fetcher.py (e.g., NewsAPI, RSS), stored via SQLAlchemy in SQLite.
 
 🙏 Acknowledgements
+Datasets from open-source fake news and summarization projects.
 
-Datasets and inspiration from open-source fake news detection and summarization projects.
+Libraries: Flask, scikit-learn, pandas, NLTK, etc.
 
-Flask, scikit-learn, and other open-source libraries.
+Tailwind CSS and open-source UI inspiration.
+
 
 Happy coding! 🚀
+
+
+
+

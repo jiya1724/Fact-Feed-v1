@@ -1,6 +1,8 @@
 import requests
 import feedparser
 from datetime import datetime
+from backend.app import create_app
+from backend.aggregator.storage import store_articles
 
 def fetch_news():
     articles = []
@@ -24,7 +26,8 @@ def fetch_news():
                     'source': item['source']['name'],
                     'published_at': datetime.strptime(item['publishedAt'], "%Y-%m-%dT%H:%M:%SZ"),
                     'category': 'general',
-                    'author': item.get('author', 'Unknown')  # Default author value if missing
+                    'author': item.get('author', 'Unknown'),
+                    'url': item.get('url')  # ✅ ADD THIS
                 })
     except Exception as e:
         print(f"NewsAPI Error: {str(e)}")
@@ -37,11 +40,25 @@ def fetch_news():
                 'title': entry.title,
                 'content': entry.description,
                 'source': 'BBC',
-                'published_at': datetime.now(),  # Use current time for RSS feeds
+                'published_at': datetime.now(),
                 'category': 'general',
-                'author': entry.get('author', 'Unknown')  # Default author value if missing
+                'author': entry.get('author', 'Unknown'),
+                'url': entry.link  # ✅ ADD THIS
             })
     except Exception as e:
         print(f"RSS Error: {str(e)}")
 
     return articles
+
+
+if __name__ == "__main__":
+    # Flask app context for database operations
+    app = create_app()
+    with app.app_context():
+        print("Fetching news articles...")
+        articles = fetch_news()
+        print(f"Fetched {len(articles)} articles")
+
+        print("Storing articles in database...")
+        new_count = store_articles(articles)
+        print(f"Added {new_count} new articles to database")

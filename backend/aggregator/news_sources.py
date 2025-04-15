@@ -10,7 +10,7 @@ SOURCES = [
         'url': 'https://newsapi.org/v2/top-headlines',
         'params': {
             'country': 'in',
-            'apiKey': 'your_key'
+            'apiKey': 'ab6877a9ab494ade88a22812b4a84c82'
         }
     }
 ]

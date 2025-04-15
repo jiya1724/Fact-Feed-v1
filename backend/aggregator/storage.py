@@ -12,12 +12,14 @@ def store_articles(articles):
                 source=article['source'],
                 published_at=article['published_at'],
                 category=article['category'],
-                author=article.get('author', 'Unknown')  # Add default author value
+                author=article.get('author', 'Unknown'),
+                url=article.get('url')  # ✅ Save it
             )
             db.session.add(new_article)
             new_count += 1
     db.session.commit()
     return new_count
+
 
 def get_articles():
     """Retrieve all articles from the database."""

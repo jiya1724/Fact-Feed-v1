@@ -68,7 +68,8 @@ def create_app():
                 'source': a.source,
                 'published_at': a.published_at.isoformat() if a.published_at else None,
                 'category': a.category,
-                'author': a.author
+                'author': a.author,
+                'url':a.url
             } for a in articles]
             return jsonify(article_list)
         except Exception as e:

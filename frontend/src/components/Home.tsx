@@ -1,7 +1,15 @@
 import Navbar from './Navbar';
 import { Link, useNavigate } from 'react-router-dom';
 
-function FeatureCard({ title, description, onClick }) {
+interface FeatureCardProps {
+  title: string;
+  description: string;
+  onClick: () => void;
+}
+
+
+
+function FeatureCard({ title, description, onClick }:FeatureCardProps) {
   return (
     <div 
       className="bg-white bg-opacity-10 p-4 rounded-lg text-center hover:scale-105 transition transform hover:shadow-xl cursor-pointer"

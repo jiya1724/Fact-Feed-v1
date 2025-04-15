@@ -1,3 +1,5 @@
+#for testing
+
 import sys
 import os
 from datetime import datetime
@@ -17,7 +19,8 @@ with app.app_context():
         source="Sample Source",
         category="general",
         author="Admin",
-        published_at=datetime.now()
+        published_at=datetime.now(),
+        url="https://example.com/sample-article"  # Add this
     )
     db.session.add(new_article)
     db.session.commit()
