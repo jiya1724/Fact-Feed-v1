@@ -1,0 +1,34 @@
+# Flask web framework
+Flask==2.2.5
+
+# Flask extensions (if used)
+Flask-SQLAlchemy==3.0.5
+Flask-Migrate==4.0.5
+Flask-Cors==4.0.0
+
+# Machine Learning & NLP
+scikit-learn==1.4.1
+pandas==2.2.2
+numpy==1.26.4
+nltk==3.8.1
+
+# For text vectorization and summarization
+scipy==1.13.0
+
+# For HTML templating (if using Mako)
+Mako==1.3.2
+
+# For parsing and requests (if scraping or fetching news)
+# requests==2.31.0
+# beautifulsoup4==4.12.3
+
+# Logging (optional, if using advanced logging)
+# loguru==0.7.2
+
+# For development
+python-dotenv==1.0.1
+
+# If using Jupyter notebooks for experiments (optional)
+# jupyterlab==4.1.5
+
+# Add any other dependencies your code uses
