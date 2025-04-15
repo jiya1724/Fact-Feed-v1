@@ -38,6 +38,7 @@ sample_text = """
 The government has introduced a new healthcare policy aimed at providing affordable medical services to all citizens. The policy includes subsidized health insurance and expanded access to rural areas
 
 According to a report circulating on WhatsApp, the United Nations has officially recognized India as the richest country in the world in 2024. The message claims that India’s economy has surpassed that of the USA and China in terms of GDP.
+
 """
 
 """Real
