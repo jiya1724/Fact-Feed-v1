@@ -1,28 +1,20 @@
-import React from 'react';
-import { Routes, Route } from 'react-router-dom';
-import Home from './components/Home';
-import SubmitNews from './components/SubmitNews';
-import FakeNewsDetector from './components/Detector'; // New component
-import Summarizer from './components/Summarize'; // New component
-import Aggregator from './components/Aggregator';
-import Navbar from './components/Navbar';
-import Logout from './components/Logout';
+import React from "react";
+import { Route, Routes } from "react-router-dom"; // Remove BrowserRouter import
+import Aggregator from "./components/Aggregator";
+import Home from "./components/Home";
+import Detector from "./components/Detector";
+import Summarizer from "./components/Summarize";
+import "./index.css";
 
 function App() {
   return (
-    <>
-      <Navbar />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        {/* <Route path="/submit" element={<SubmitNews />} /> */}
-        <Route path="/logout" element={<Logout />} />
-        <Route path="/detect" element={<FakeNewsDetector />} /> {/* Fake News Detector */}
-        <Route path="/summarizer" element={<Summarizer />} /> {/* Summarizer */}
-        <Route path="/aggregator" element={<Aggregator />} />
-        <Route path="/SubmitNews" element={<SubmitNews/>} />
-        <Route path="*" element={<div>404 Not Found</div>} />
-      </Routes>
-    </>
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/aggregator" element={<Aggregator />} />
+      <Route path="/detector" element={<Detector />} />
+      <Route path="/summarizer" element={<Summarizer />} />
+      <Route path="*" element={<Home />} />
+    </Routes>
   );
 }
 
