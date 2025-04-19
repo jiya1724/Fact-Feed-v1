@@ -5,6 +5,7 @@ import Home from "./components/Home";
 import Detector from "./components/Detector";
 import Summarizer from "./components/Summarize";
 import "./index.css";
+import Login from "./components/Login";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
       <Route path="/aggregator" element={<Aggregator />} />
       <Route path="/detector" element={<Detector />} />
       <Route path="/summarizer" element={<Summarizer />} />
+      <Route path="/login" element={<Login/>} />
       <Route path="*" element={<Home />} />
     </Routes>
   );
