@@ -1,92 +1,86 @@
-# 📰 News Summarizer, Aggregator, and Fake News Detection
+📰 News Summarizer, Aggregator & Fake News Detection
+A web application to:
 
-## 📝 Project Overview
+✂️ Summarize lengthy news articles using advanced NLP.
 
-This is a web-based application that allows users to:
+🌐 Aggregate news from multiple sources for comprehensive coverage.
 
-- ✂️ Summarize lengthy news articles using advanced Natural Language Processing (NLP) techniques.
-- 🌐 Aggregate news from multiple sources for comprehensive coverage.
-- 🧪 Detect and flag potentially fake news content to ensure information reliability.
+🧪 Detect and flag potentially fake news content using machine learning.
 
-The application uses **Python (Flask)** for backend processing and **TypeScript (React)** for the frontend. It integrates machine learning models to power NLP tasks like summarization and fake news detection.
+Built with a Python (Flask) backend and TypeScript (React) frontend, integrating ML models for summarization and fake news detection.
 
----
+🚀 Features
+Text Summarization: Condense articles into concise summaries.
 
-## 🚀 Features
+News Aggregation: Fetch and store news from diverse APIs and RSS sources.
 
-- **Text Summarization**: Condenses articles into their key points.
-- **News Aggregation**: Fetches and stores news from diverse APIs/sources.
-- **Fake News Detection**: Flags suspicious or misleading content using ML classifiers.
+Fake News Detection: Flag suspicious or misleading content using ML classifiers.
 
----
+Modern UI: Responsive, mobile-friendly interface with Tailwind CSS.
 
-## 🛠️ Technologies Used
-
-| Layer     | Technology                                    |
-|-----------|-----------------------------------------------|
-| Frontend  | TypeScript, React, Tailwind CSS, Mako         |
-| Backend   | Python (Flask, Flask-SQLAlchemy, Flask-Migrate) |
-| ML/NLP    | Scikit-learn, NLTK, pandas, numpy             |
-| Database  | SQLite                                        |
-| Other     | dotenv, logging, cron jobs (APScheduler)      |
-
----
-
-## 📁 Project Structure
-. ├── backend/ # Flask backend code ├── frontend/ # React + Tailwind frontend ├── datasets/ # ML training/evaluation datasets ├── models/ # Trained ML models ├── logs/ # Log files ├── migrations/ # DB migrations via Alembic ├── instance/ # Instance configs (e.g., API keys) ├── cosine_summarizer.py # Cosine similarity-based summarizer ├── summarize.py # Main summarizer script ├── requirements.txt # Python dependencies ├── .flaskenv # Flask environment variables └── README.md # Project documentation
+🛠️ Tech Stack
+Layer	  Technology
+Frontend	 TypeScript, React, Tailwind CSS
+Backend 	Python (Flask, Flask-SQLAlchemy, Flask-Migrate)
+ML/NLP	 Scikit-learn, NLTK, pandas, numpy, sumy
+Database	 SQLite
+Other	 dotenv, logging, APScheduler, feedparser
 
 
----
+📁 Project Structure
 
-## ⚙️ Installation
+.
+├── backend/         # Flask backend code
+├── frontend/        # React + Tailwind frontend
+├── datasets/        # ML training/evaluation datasets
+├── models/          # Trained ML models
+├── logs/            # Log files
+├── migrations/      # DB migrations via Alembic
+├── instance/        # Instance configs (e.g., API keys)
+├── requirements.txt # Python dependencies
+├── .flaskenv        # Flask environment variables
+└── README.md        # Project documentation
 
-### 1. Clone the repository
 
-```bash
+⚙️ Installation
+1. Clone the Repository
 git clone https://github.com/KartikAmbupe/Mini-Project-Sem-VI.git
 cd Mini-Project-Sem-VI
 
-2. Install dependencies
-
+2. Backend Setup
 pip install -r requirements.txt
-
-3. Run database migrations
-
 flask db upgrade
-
-4. Start the application
-
 flask run
 
+3. Frontend Setup
+cd frontend
+npm install
+npm run dev
+
 🧪 Usage
+Open http://localhost:5173 (frontend) or http://localhost:5000 (backend API).
 
-Open the app in your browser: http://localhost:5000
+Summarizer: Condense news articles.
 
-Navigate through:
+Aggregator: Browse current news from multiple sources.
 
-Summarizer to condense articles.
-
-Aggregator to browse current news.
-
-Detector to check for fake news.
+Detector: Check if an article is potentially fake.
 
 🤖 Machine Learning Approach
-Summarization: Extractive method using cosine similarity and sentence ranking via NLP.
+Summarization: Extractive, using cosine similarity and sentence ranking (NLP).
 
-Fake News Detection: Classification using algorithms like Naive Bayes or Logistic Regression on TF-IDF features.
+Fake News Detection: Classification (Naive Bayes/Logistic Regression on TF-IDF features).
 
-Aggregation: Scheduled background jobs (via APScheduler) pull articles using fetcher.py (e.g., NewsAPI, RSS), stored via SQLAlchemy in SQLite.
+Aggregation: Scheduled background jobs (APScheduler) pull articles via fetcher.py (NewsAPI, RSS), stored via SQLAlchemy in SQLite.
+
 
 🙏 Acknowledgements
 Datasets from open-source fake news and summarization projects.
 
-Libraries: Flask, scikit-learn, pandas, NLTK, etc.
+Libraries: Flask, scikit-learn, pandas, NLTK, sumy, etc.
 
-Tailwind CSS and open-source UI inspiration.
+UI inspiration from open-source Tailwind CSS projects.
+
 
 
 Happy coding! 🚀
-
-
-
-
