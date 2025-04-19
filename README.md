@@ -19,27 +19,28 @@ Fake News Detection: Flag suspicious or misleading content using ML classifiers.
 Modern UI: Responsive, mobile-friendly interface with Tailwind CSS.
 
 🛠️ Tech Stack
-Layer	  Technology
-Frontend	 TypeScript, React, Tailwind CSS
-Backend 	Python (Flask, Flask-SQLAlchemy, Flask-Migrate)
-ML/NLP	 Scikit-learn, NLTK, pandas, numpy, sumy
-Database	 SQLite
-Other	 dotenv, logging, APScheduler, feedparser
+
+Layer	      Technology
+Frontend	   TypeScript, React, Tailwind CSS
+Backend 	   Python (Flask, Flask-SQLAlchemy, Flask-Migrate)
+ML/NLP	     Scikit-learn, NLTK, pandas, numpy, sumy
+Database	    SQLite
+Other	        dotenv, logging, APScheduler, feedparser
 
 
 📁 Project Structure
 
 .
-├── backend/         # Flask backend code
-├── frontend/        # React + Tailwind frontend
-├── datasets/        # ML training/evaluation datasets
-├── models/          # Trained ML models
-├── logs/            # Log files
-├── migrations/      # DB migrations via Alembic
-├── instance/        # Instance configs (e.g., API keys)
-├── requirements.txt # Python dependencies
-├── .flaskenv        # Flask environment variables
-└── README.md        # Project documentation
+├── backend/          # Flask backend code
+├── frontend/         # React + Tailwind frontend
+├── datasets/         # ML training/evaluation datasets
+├── models/           # Trained ML models
+├── logs/             # Log files
+├── migrations/       # DB migrations via Alembic
+├── instance/         # Instance configs (e.g., API keys)
+├── requirements.txt  # Python dependencies
+├── .flaskenv         # Flask environment variables
+└── README.md         # Project documentation
 
 
 ⚙️ Installation
