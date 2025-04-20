@@ -1,6 +1,3 @@
-Israel launched a series of airstrikes across the Gaza Strip, targeting Hamas in what is described as the heaviest assault since a ceasefire was established in January. Gaza's Ministry of Health reported at least 44 fatalities from the strikes. The Israeli government stated that the attacks were a response to Hamas's refusal to release hostages and engage in ceasefire negotiations. Prime Minister Benjamin Netanyahu emphasized that Israel would intensify its military actions against Hamas.
-The strikes have caused significant destruction in Gaza, with explosions reported in multiple locations. Ambulances were seen rushing to Al Aqsa Hospital in central Gaza. The ceasefire, which had brought temporary relief, is now at risk of collapsing, potentially worsening the humanitarian crisis in the region.
-
-The government has introduced a new healthcare policy aimed at providing affordable medical services to all citizens. The policy includes subsidized health insurance and expanded access to rural areas
-
-The Trump Organisation has launched its first commercial real estate project in India, called Trump World Center Pune. This marks a shift from their focus on luxury residential properties
+version https://git-lfs.github.com/spec/v1
+oid sha256:f15489157d0964de346a120011b8487665dfd253ea59a140a8d811cbe5b0e63e
+size 2189

@@ -21,23 +21,17 @@ def create_app():
     # Initialize extensions
     db.init_app(app)
     migrate.init_app(app, db)
-    cors.init_app(app, resources={r"/api/*": {"origins": "http://localhost:5173"}})
+    cors.init_app(app, resources={r"/*": {"origins": "http://localhost:5173"}})
+
 
     # Import models and services
     from backend.models import Article
-    from backend.detector import predict_news
+    from backend.roberta_detector import predict_news
     from backend.summerizer import summarize_text
     
     @app.route('/')
     def home():
         return "Fake News Detection & Summarization API is Running!"
-
-    @app.route("/", defaults={"path": ""})
-    @app.route("/<path:path>")
-    def serve(path):
-        if path and os.path.exists(os.path.join(app.static_folder, path)):
-            return send_from_directory(app.static_folder, path)
-        return send_from_directory(app.static_folder, "index.html")
 
     @app.route('/predict', methods=['POST'])
     def predict():
@@ -45,8 +39,9 @@ def create_app():
         text = data.get("text", "")
         if not text:
             return jsonify({"error": "No text provided"}), 400
-        
+
         result = predict_news(text)
+        app.logger.info(f"Prediction made: {result} for text: {text[:100]}...")
         return jsonify({"prediction": result})
 
     @app.route('/summarize', methods=['POST'])
@@ -60,6 +55,13 @@ def create_app():
         
         summary = summarize_text(text, num_sentences)
         return jsonify({"summary": summary})
+    
+    @app.route("/", defaults={"path": ""})
+    @app.route("/<path:path>")
+    def serve(path):
+        if path and os.path.exists(os.path.join(app.static_folder, path)):
+            return send_from_directory(app.static_folder, path)
+        return send_from_directory(app.static_folder, "index.html")
 
     @app.route('/api/news')
     def get_news():

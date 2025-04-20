@@ -36,7 +36,7 @@ function Home() {
 
           {/* Buttons Section */}
           <div className="mt-6 flex justify-center space-x-4">
-            <Link to="/detect">
+            <Link to="/detector">
               <button 
                 aria-label="Verify News"
                 className="bg-purple-600 hover:bg-purple-700 px-5 py-2 rounded-xl transition transform hover:scale-105 hover:shadow-lg"
@@ -61,7 +61,7 @@ function Home() {
           <FeatureCard 
             title="AI-Powered Verification" 
             description="Detect fake news with our cutting-edge machine learning model."
-            onClick={() => navigate('/detect')}
+            onClick={() => navigate('/detector')}
           />
           <FeatureCard 
             title="Summarized Insights" 

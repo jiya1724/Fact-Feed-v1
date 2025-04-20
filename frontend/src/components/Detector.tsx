@@ -7,7 +7,7 @@ interface VerificationResponse {
   error?: string;
 }
 
-const FakeNewsDetector: React.FC = () => {
+const Detector: React.FC = () => {
   const [description, setDescription] = useState<string>('');
   const [sourceUrl, setSourceUrl] = useState<string>('');
   const [verification, setVerification] = useState<string>('');
@@ -60,7 +60,7 @@ const FakeNewsDetector: React.FC = () => {
           ></textarea>
         </div>
 
-        {/* Source URL Input */}
+        {/* Source URL Input
         <div className="mb-4">
           <label className="block mb-1">Source URL</label>
           <input
@@ -70,7 +70,7 @@ const FakeNewsDetector: React.FC = () => {
             value={sourceUrl}
             onChange={(e) => setSourceUrl(e.target.value)}
           />
-        </div>
+        </div> */}
 
         {/* Verify Button */}
         <button
@@ -92,4 +92,4 @@ const FakeNewsDetector: React.FC = () => {
   );
 };
 
-export default FakeNewsDetector;
+export default Detector;
